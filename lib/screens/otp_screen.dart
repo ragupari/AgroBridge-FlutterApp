@@ -19,7 +19,7 @@ class OtpScreen extends StatelessWidget {
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(40.0),
+                padding: const EdgeInsets.fromLTRB(40, 5, 40, 40),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -47,7 +47,9 @@ class OtpScreen extends StatelessWidget {
                           backgroundColor: Colors.green[800],
                           foregroundColor: Colors.white,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/home');
+                        },
                         child: const Text("Verify"),
                       ),
                     ),
