@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:green_stack/screens/home_screen.dart';
 import 'package:green_stack/screens/otp_screen.dart';
 import 'package:green_stack/screens/product_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'screens/status_screen.dart';
+import 'screens/cart_screen.dart';
+import 'screens/settings_screen.dart';
+import 'screens/profile_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,15 +20,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Farmer Login',
+      title: 'AgroBridge',
       theme: ThemeData(textTheme: GoogleFonts.outfitTextTheme()),
       debugShowCheckedModeBanner: false,
-      home: const LoginScreen(),
+      initialRoute: '/login',
       routes: {
         '/signup': (_) => const SignUpScreen(),
         '/login': (_) => const LoginScreen(),
         '/otp': (_) => const OtpScreen(),
         '/home': (_) => const HomeScreen(),
+        '/status': (_) => StatusScreen(),
+        '/cart': (_) => CartScreen(),
+        '/settings': (_) => SettingsScreen(),
+        '/profile': (_) => ProfileScreen(),
         '/product': (_) => const ProductScreen(),
       },
     );
