@@ -9,10 +9,15 @@ import 'screens/status_screen.dart';
 import 'screens/cart_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/profile_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // ✅ required before async init
+  await dotenv.load(fileName: ".env");       // ✅ ensure the file exists
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

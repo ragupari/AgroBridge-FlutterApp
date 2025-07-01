@@ -1,7 +1,113 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../services/auth_service.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _mobileCtrl = TextEditingController();
+
+  // ✅ Show loading dialog
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const Center(child: CircularProgressIndicator()),
+    );
+  }
+
+  // ✅ Handle login logic
+  Future<void> handleLogin() async {
+  final mobile = _mobileCtrl.text.trim();
+
+  if (mobile.isEmpty || mobile.length != 10) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          "Please enter a valid 10-digit mobile number",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.red,
+      ),
+    );
+    return;
+  }
+
+  showLoadingDialog();
+
+  try {
+    final result = await AuthService.loginUser(mobile: mobile);
+    Navigator.of(context).pop(); // Close loading dialog
+
+    if (result['status'] == 200 && result['data']['success'] == true) {
+      // ✅ Show green success snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Login successful",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 3),
+        ),
+      );
+
+      // ✅ Delay navigation until snackbar finishes
+      await Future.delayed(const Duration(seconds: 3));
+      Navigator.pushNamed(context, '/home');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            result['data']['message'] ?? 'Login failed',
+            style: const TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  } catch (e) {
+    Navigator.of(context).pop(); // Close loading dialog
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          "Something went wrong",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+}
+
+  // ✅ Mobile input field (digits only, max 10)
+  Widget customInputField(
+    IconData icon,
+    String hint,
+    TextEditingController controller, {
+    bool isPassword = false,
+  }) {
+    return TextField(
+      controller: controller,
+      obscureText: isPassword,
+      keyboardType: TextInputType.phone,
+      maxLength: 10,
+      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+      decoration: InputDecoration(
+        counterText: '',
+        prefixIcon: Icon(icon),
+        hintText: hint,
+        filled: true,
+        fillColor: Colors.green[50],
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +130,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  customInputField(Icons.phone, "Enter Mobile Number"),
+                  customInputField(Icons.phone, "Enter Mobile Number", _mobileCtrl),
                   const SizedBox(height: 20),
                   SizedBox(
                     width: 200,
@@ -33,13 +139,10 @@ class LoginScreen extends StatelessWidget {
                         backgroundColor: Colors.green[800],
                         foregroundColor: Colors.white,
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/otp');
-                      },
+                      onPressed: handleLogin,
                       child: const Text("Login"),
                     ),
                   ),
-
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -62,34 +165,4 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-
-  Widget customInputField(
-    IconData icon,
-    String hint, {
-    bool isPassword = false,
-  }) {
-    return TextField(
-      obscureText: isPassword,
-      decoration: InputDecoration(
-        prefixIcon: Icon(icon),
-        hintText: hint,
-        filled: true,
-        fillColor: Colors.green[50],
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-      ),
-    );
-  }
-
-  // Widget socialButton(String text, IconData icon) {
-  //   return ElevatedButton.icon(
-  //     style: ElevatedButton.styleFrom(
-  //       backgroundColor: Colors.green[100],
-  //       foregroundColor: Colors.black,
-  //       minimumSize: const Size(double.infinity, 40),
-  //     ),
-  //     onPressed: () {},
-  //     icon: Icon(icon),
-  //     label: Text(text),
-  //   );
-  // }
 }
