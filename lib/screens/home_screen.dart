@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../widgets/main_layout.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -30,22 +31,9 @@ class HomeScreen extends StatelessWidget {
       },
     ];
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green[800],
-        iconTheme: const IconThemeData(color: Colors.white),
-        title: Text(
-          'Welcome to AgroBridge',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontFamily: GoogleFonts.outfit().fontFamily,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
-      ),
-      body: Column(
+    return MainLayout(
+      currentIndex: 0,
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // 🔍 Search bar
@@ -85,13 +73,20 @@ class HomeScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final product = products[index];
                 return InkWell(
-                  onTap: () => Navigator.pushNamed(context, '/product', arguments: product),
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    '/product',
+                    arguments: product,
+                  ),
                   // context = the widget’s location in the widget tree.
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 16),
                     decoration: BoxDecoration(
                       border: Border(
-                        right: BorderSide(color: Colors.green.shade800, width: 6),
+                        right: BorderSide(
+                          color: Colors.green.shade800,
+                          width: 6,
+                        ),
                       ),
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.white,
@@ -124,7 +119,9 @@ class HomeScreen extends StatelessWidget {
                           // Product info
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                              ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
