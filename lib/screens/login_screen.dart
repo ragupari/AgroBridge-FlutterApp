@@ -99,6 +99,7 @@ Widget build(BuildContext context) {
               child: Image.asset(
                 'images/AgroBridge.png',
                 fit: BoxFit.contain,
+                 height: MediaQuery.of(context).size.width * 0.80,
                  // you can adjust this height as needed
               ),
             ),
