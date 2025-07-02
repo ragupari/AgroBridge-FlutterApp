@@ -1,5 +1,7 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+import '../constants/colors.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -24,78 +26,158 @@ class _SignUpScreenState extends State<SignUpScreen> {
       print("Registration successful: ${response['data']['message']}");
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-        response['data']['message'] ?? 'Error',
-        style: const TextStyle(color: Colors.white),
+        SnackBar(
+          content: Text(
+            response['data']['message'] ?? 'Error',
+            style: const TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 3),
+          margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
+          dismissDirection: DismissDirection.up,
         ),
-        backgroundColor: Colors.red,
-        behavior: SnackBarBehavior.floating,
-        duration: const Duration(seconds: 3),
-        margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
-        // Show from the top
-        dismissDirection: DismissDirection.up,
-      ),
       );
     }
   }
 
-  Widget customInputField(
-      IconData icon, String hint, TextEditingController controller) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        prefixIcon: Icon(icon),
-        hintText: hint,
-        filled: true,
-        fillColor: Colors.green[50],
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+  Widget customInputField(IconData icon, String hint, TextEditingController controller) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 15),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+        border: Border.all(color: AppColors.paleGreen),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.paleGreen.withOpacity(0.1),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          )
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            prefixIcon: Icon(icon),
+            hintText: hint,
+            hintStyle: TextStyle(color: AppColors.black),
+          ),
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(40),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text("Sign Up", style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.green)),
-            const SizedBox(height: 20),
-            customInputField(Icons.person, "Enter First Name", _firstNameCtrl),
-            const SizedBox(height: 15),
-            customInputField(Icons.person, "Enter Last Name", _lastNameCtrl),
-            const SizedBox(height: 15),
-            customInputField(Icons.phone, "Enter Mobile Number", _mobileCtrl),
-            const SizedBox(height: 20),
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
 
-            ElevatedButton(
-              onPressed: handleRegister,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green[800],
-                foregroundColor: Colors.white,
+    return Scaffold(
+      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: true,
+      body: Column(
+        children: [
+          // Top area with image
+          Expanded(
+            child: Center(
+              child: FadeInUp(
+                duration: const Duration(milliseconds: 1000),
+                child: Image.asset(
+                  'assets/Background-2.png',
+                  fit: BoxFit.contain,
+                 
+                ),
               ),
-              
-              child: const Text("Sign Up"),
             ),
-            const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Already Have an Account? "),
-                      InkWell(
-                        onTap: () => Navigator.pushNamed(context, '/login'),
+          ),
+
+          // Bottom-aligned form
+          AnimatedPadding(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+            padding: EdgeInsets.only(bottom: bottomInset > 0 ? bottomInset : 30),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 1500),
+                    child: const Text(
+                      "Sign Up",
+                      style: TextStyle(
+                        color: AppColors.paleGreen,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 1600),
+                    child: customInputField(Icons.person, "Enter First Name", _firstNameCtrl),
+                  ),
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 1700),
+                    child: customInputField(Icons.person, "Enter Last Name", _lastNameCtrl),
+                  ),
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 1800),
+                    child: customInputField(Icons.phone, "Enter Mobile Number", _mobileCtrl),
+                  ),
+                  const SizedBox(height: 20),
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 1900),
+                    child: MaterialButton(
+                      onPressed: handleRegister,
+                      color: AppColors.paleGreen,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      height: 50,
+                      minWidth: double.infinity,
+                 child: const Center(
+                        child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                          "Sign Up",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          ),
+                          SizedBox(width: 10),
+                          Icon(Icons.arrow_forward, color: Colors.white),
+                        ],
+                        
+                      ),
+                    ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  FadeInUp(
+                    duration: const Duration(milliseconds: 2000),
+                    child: Center(
+                      child: TextButton(
+                        onPressed: () => Navigator.pushNamed(context, '/login'),
                         child: const Text(
-                          "Sign Up Here",
-                          style: TextStyle(color: Colors.green),
+                          "Already Have an Account? Login",
+                          style: TextStyle(color: AppColors.paleGreen),
                         ),
                       ),
-                    ],
+                    ),
                   ),
-          ],
-        ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
