@@ -24,24 +24,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
       print("Registration successful: ${response['data']['message']}");
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-        response['data']['message'] ?? 'Error',
-        style: const TextStyle(color: Colors.white),
+        SnackBar(
+          content: Text(
+            response['data']['message'] ?? 'Error',
+            style: const TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 3),
+          margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
+          // Show from the top
+          dismissDirection: DismissDirection.up,
         ),
-        backgroundColor: Colors.red,
-        behavior: SnackBarBehavior.floating,
-        duration: const Duration(seconds: 3),
-        margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
-        // Show from the top
-        dismissDirection: DismissDirection.up,
-      ),
       );
     }
   }
 
   Widget customInputField(
-      IconData icon, String hint, TextEditingController controller) {
+    IconData icon,
+    String hint,
+    TextEditingController controller,
+  ) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
@@ -57,45 +60,94 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(40),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text("Sign Up", style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.green)),
-            const SizedBox(height: 20),
-            customInputField(Icons.person, "Enter First Name", _firstNameCtrl),
-            const SizedBox(height: 15),
-            customInputField(Icons.person, "Enter Last Name", _lastNameCtrl),
-            const SizedBox(height: 15),
-            customInputField(Icons.phone, "Enter Mobile Number", _mobileCtrl),
-            const SizedBox(height: 20),
-
-            ElevatedButton(
-              onPressed: handleRegister,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green[800],
-                foregroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 249, 255, 249),
+      body: Stack(
+        children: [
+          Center(
+            child: Opacity(
+              opacity: 0.2, // Adjust opacity as needed
+              child: Image.asset(
+                'images/LoginBackround.png',
+                width: 450, // Set width/height as needed
+                fit: BoxFit.contain,
               ),
-              
-              child: const Text("Sign Up"),
             ),
-            const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Already Have an Account? "),
-                      InkWell(
-                        onTap: () => Navigator.pushNamed(context, '/login'),
-                        child: const Text(
-                          "Sign Up Here",
-                          style: TextStyle(color: Colors.green),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(40),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "Sign Up",
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 7, 101, 10),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                customInputField(
+                  Icons.person,
+                  "Enter First Name",
+                  _firstNameCtrl,
+                ),
+                const SizedBox(height: 15),
+                customInputField(
+                  Icons.person,
+                  "Enter Last Name",
+                  _lastNameCtrl,
+                ),
+                const SizedBox(height: 15),
+                customInputField(
+                  Icons.phone,
+                  "Enter Mobile Number",
+                  _mobileCtrl,
+                ),
+                const SizedBox(height: 20),
+
+                SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
+                    onPressed: handleRegister,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green[800],
+                      foregroundColor: Colors.white,
+                    ),
+                    child: const Text(
+                      "Sign Up",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Already Have an Account? ",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () => Navigator.pushNamed(context, '/login'),
+                      child: const Text(
+                        "Login Here",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 7, 101, 10),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
                         ),
                       ),
-                    ],
-                  ),
-          ],
-        ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

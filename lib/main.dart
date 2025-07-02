@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:green_stack/screens/home_screen.dart';
+import 'package:green_stack/screens/join_screen.dart';
 import 'package:green_stack/screens/notifications_screen.dart';
 import 'package:green_stack/screens/otp_screen.dart';
 import 'package:green_stack/screens/product_screen.dart';
@@ -14,10 +15,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); // ✅ required before async init
-  await dotenv.load(fileName: ".env");       // ✅ ensure the file exists
+  await dotenv.load(fileName: ".env"); // ✅ ensure the file exists
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'AgroBridge',
       theme: ThemeData(textTheme: GoogleFonts.outfitTextTheme()),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
+      initialRoute: '/join',
       routes: {
         '/signup': (_) => const SignUpScreen(),
         '/login': (_) => const LoginScreen(),
@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
         '/profile': (_) => ProfileScreen(),
         '/product': (_) => const ProductScreen(),
         '/notifications': (_) => const NotificationsScreen(),
+        '/join': (_) => const JoinScreen(),
       },
     );
   }

@@ -66,6 +66,15 @@ flutter:
   assets:
     - .env
     - images/default_farmer.png
+    - images/join_screen.png
+    - images/LoginBackround.png
+    - images/OTP_Backround.png
+    - images/goat.png
+    - images/chicken.png
+    - images/egg.png
+    - images/rice.png
+    - images/vegetables.png
+    - images/fruits.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
