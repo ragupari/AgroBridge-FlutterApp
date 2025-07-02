@@ -23,67 +23,67 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // ✅ Handle login logic
   Future<void> handleLogin() async {
-  final mobile = _mobileCtrl.text.trim();
+    final mobile = _mobileCtrl.text.trim();
 
-  if (mobile.isEmpty || mobile.length != 10) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          "Please enter a valid 10-digit mobile number",
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.red,
-      ),
-    );
-    return;
-  }
-
-  showLoadingDialog();
-
-  try {
-    final result = await AuthService.loginUser(mobile: mobile);
-    Navigator.of(context).pop(); // Close loading dialog
-
-    if (result['status'] == 200 && result['data']['success'] == true) {
-      // ✅ Show green success snackbar
+    if (mobile.isEmpty || mobile.length != 10) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            "Login successful",
+            "Please enter a valid 10-digit mobile number",
             style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: Colors.green,
-          duration: Duration(seconds: 3),
+          backgroundColor: Colors.red,
         ),
       );
+      return;
+    }
 
-      // ✅ Delay navigation until snackbar finishes
-      await Future.delayed(const Duration(seconds: 3));
-      Navigator.pushNamed(context, '/home');
-    } else {
+    showLoadingDialog();
+
+    try {
+      final result = await AuthService.loginUser(mobile: mobile);
+      Navigator.of(context).pop(); // Close loading dialog
+
+      if (result['status'] == 200 && result['data']['success'] == true) {
+        // ✅ Show green success snackbar
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              "Login successful",
+              style: TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 3),
+          ),
+        );
+
+        // ✅ Delay navigation until snackbar finishes
+        await Future.delayed(const Duration(seconds: 3));
+        Navigator.pushNamed(context, '/home');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              result['data']['message'] ?? 'Login failed',
+              style: const TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      Navigator.of(context).pop(); // Close loading dialog
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text(
-            result['data']['message'] ?? 'Login failed',
-            style: const TextStyle(color: Colors.white),
+            "Something went wrong",
+            style: TextStyle(color: Colors.white),
           ),
           backgroundColor: Colors.red,
         ),
       );
     }
-  } catch (e) {
-    Navigator.of(context).pop(); // Close loading dialog
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          "Something went wrong",
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.red,
-      ),
-    );
   }
-}
 
   // ✅ Mobile input field (digits only, max 10)
   Widget customInputField(
@@ -112,54 +112,90 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Row(
+      backgroundColor: const Color.fromARGB(255, 249, 255, 249),
+      body: Stack(
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(40.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "Login",
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  customInputField(Icons.phone, "Enter Mobile Number", _mobileCtrl),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    width: 200,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green[800],
-                        foregroundColor: Colors.white,
-                      ),
-                      onPressed: handleLogin,
-                      child: const Text("Login"),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
+          // ✅ Background image with opacity
+          Center(
+            child: Opacity(
+              opacity: 0.2, // Adjust opacity as needed
+              child: Image.asset(
+                'images/LoginBackround.png',
+                width: 450, // Set width/height as needed
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(40.0),
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Don't Have an Account? "),
-                      InkWell(
-                        onTap: () => Navigator.pushNamed(context, '/signup'),
-                        child: const Text(
-                          "Sign Up Here",
-                          style: TextStyle(color: Colors.green),
+                      const Text(
+                        "Login",
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 7, 101, 10),
                         ),
+                      ),
+                      const SizedBox(height: 20),
+                      customInputField(
+                        Icons.phone,
+                        "Enter Mobile Number",
+                        _mobileCtrl,
+                      ),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        width: 200,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green[800],
+                            foregroundColor: Colors.white,
+                          ),
+                          onPressed: handleLogin,
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Don't Have an Account? ",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () =>
+                                Navigator.pushNamed(context, '/signup'),
+                            child: const Text(
+                              "Sign Up Here",
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 7, 101, 10),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         ],
       ),

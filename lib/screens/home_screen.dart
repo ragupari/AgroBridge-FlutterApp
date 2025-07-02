@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:green_stack/widgets/banner_slider.dart';
+import 'package:green_stack/widgets/our_products.dart';
 import '../widgets/main_layout.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -34,44 +35,53 @@ class HomeScreen extends StatelessWidget {
 
     return MainLayout(
       currentIndex: 0,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // 🔍 Search bar
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search products...',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // 🔍 Search bar
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Search products...',
+                  prefixIcon: const Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[200],
                 ),
-                filled: true,
-                fillColor: Colors.grey[200],
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          const BannerSlider(),
-          const SizedBox(height: 10),
-          // 🏷️ Heading: Famous Searchers
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text(
-              'Famous Search',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: GoogleFonts.outfit().fontFamily,
-                color: const Color.fromARGB(221, 92, 92, 92),
+            const SizedBox(height: 10),
+            const BannerSlider(),
+            const SizedBox(height: 10),
+            const OurProducts(),
+
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 0,
+                ),
+                child: Text(
+                  'Famous Search',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: GoogleFonts.outfit().fontFamily,
+                    color: const Color.fromARGB(221, 92, 92, 92),
+                  ),
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          // 🛒 Product cards
-          Expanded(
-            child: ListView.builder(
+            const SizedBox(height: 10),
+            // 🛒 Product cards list
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 12),
               itemCount: products.length,
               itemBuilder: (context, index) {
@@ -82,7 +92,6 @@ class HomeScreen extends StatelessWidget {
                     '/product',
                     arguments: product,
                   ),
-                  // context = the widget’s location in the widget tree.
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 16),
                     decoration: BoxDecoration(
@@ -103,11 +112,9 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                     child: ClipRRect(
-                      // It forces the child widget (like an image or a container) to have rounded corners based on a BorderRadius.
                       borderRadius: BorderRadius.circular(12),
                       child: Row(
                         children: [
-                          // Product image
                           ClipRRect(
                             borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(12),
@@ -120,7 +127,6 @@ class HomeScreen extends StatelessWidget {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          // Product info
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -165,8 +171,8 @@ class HomeScreen extends StatelessWidget {
                 );
               },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

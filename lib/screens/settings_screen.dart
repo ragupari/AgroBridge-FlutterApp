@@ -6,6 +6,6 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MainLayout(child: Text("Hi"), currentIndex: 2);
+    return MainLayout(child: Text("Hi"), currentIndex: 3);
   }
 }
