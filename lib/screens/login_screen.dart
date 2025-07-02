@@ -1,6 +1,8 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../services/auth_service.dart';
+import '../constants/colors.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,7 +14,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _mobileCtrl = TextEditingController();
 
-  // ✅ Show loading dialog
   void showLoadingDialog() {
     showDialog(
       context: context,
@@ -21,7 +22,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // ✅ Handle login logic
   Future<void> handleLogin() async {
     final mobile = _mobileCtrl.text.trim();
 
@@ -42,10 +42,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       final result = await AuthService.loginUser(mobile: mobile);
-      Navigator.of(context).pop(); // Close loading dialog
+      Navigator.of(context).pop();
 
       if (result['status'] == 200 && result['data']['success'] == true) {
-        // ✅ Show green success snackbar
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
@@ -57,7 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         );
 
-        // ✅ Delay navigation until snackbar finishes
         await Future.delayed(const Duration(seconds: 3));
         Navigator.pushNamed(context, '/home');
       } else {
@@ -72,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     } catch (e) {
-      Navigator.of(context).pop(); // Close loading dialog
+      Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
@@ -84,121 +82,138 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     }
   }
+@override
+Widget build(BuildContext context) {
+  final bottomInset = MediaQuery.of(context).viewInsets.bottom;
 
-  // ✅ Mobile input field (digits only, max 10)
-  Widget customInputField(
-    IconData icon,
-    String hint,
-    TextEditingController controller, {
-    bool isPassword = false,
-  }) {
-    return TextField(
-      controller: controller,
-      obscureText: isPassword,
-      keyboardType: TextInputType.phone,
-      maxLength: 10,
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      decoration: InputDecoration(
-        counterText: '',
-        prefixIcon: Icon(icon),
-        hintText: hint,
-        filled: true,
-        fillColor: Colors.green[50],
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 249, 255, 249),
-      body: Stack(
-        children: [
-          // ✅ Background image with opacity
-          Center(
-            child: Opacity(
-              opacity: 0.2, // Adjust opacity as needed
+  return Scaffold(
+    backgroundColor: Colors.white,
+    resizeToAvoidBottomInset: true,
+    body: Column(
+      children: [
+        // Top part with centered image
+        Expanded(
+          child: Center(
+            child: FadeInUp(
+              duration: const Duration(milliseconds: 1000),
               child: Image.asset(
-                'images/LoginBackround.png',
-                width: 450, // Set width/height as needed
+                'images/AgroBridge.png',
                 fit: BoxFit.contain,
+                 // you can adjust this height as needed
               ),
             ),
           ),
-          Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(40.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Login",
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 7, 101, 10),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      customInputField(
-                        Icons.phone,
-                        "Enter Mobile Number",
-                        _mobileCtrl,
-                      ),
-                      const SizedBox(height: 20),
-                      SizedBox(
-                        width: 200,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green[800],
-                            foregroundColor: Colors.white,
-                          ),
-                          onPressed: handleLogin,
-                          child: const Text(
-                            "Login",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "Don't Have an Account? ",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () =>
-                                Navigator.pushNamed(context, '/signup'),
-                            child: const Text(
-                              "Sign Up Here",
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 7, 101, 10),
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+        ),
+
+        // Bottom-aligned login form
+        AnimatedPadding(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+          padding: EdgeInsets.only(bottom: bottomInset > 0 ? bottomInset : 30),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                FadeInUp(
+                  duration: const Duration(milliseconds: 1500),
+                  child: const Text(
+                    "Login",
+                    style: TextStyle(
+                      color: AppColors.paleGreen,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                    ),
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 20),
+                FadeInUp(
+                  duration: const Duration(milliseconds: 1700),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                      border: Border.all(
+                        color: AppColors.paleGreen,
+                        width: 1,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.paleGreen.withOpacity(0.1),
+                          blurRadius: 20,
+                          offset: const Offset(0, 10),
+                        )
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: TextField(
+                        controller: _mobileCtrl,
+                        keyboardType: TextInputType.phone,
+                        maxLength: 10,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.phone, color: AppColors.black),
+                          counterText: '',
+                          border: InputBorder.none,
+                          hintText: "Enter Mobile Number",
+                          hintStyle: TextStyle(color: AppColors.black),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                FadeInUp(
+                  duration: const Duration(milliseconds: 1900),
+                  child: MaterialButton(
+                    onPressed: handleLogin,
+                    color: AppColors.paleGreen,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    height: 50,
+                    minWidth: double.infinity,
+                    child: const Center(
+                        child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                          "Login",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          ),
+                          SizedBox(width: 10),
+                          Icon(Icons.arrow_forward, color: Colors.white),
+                        ],
+                        
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                FadeInUp(
+                  duration: const Duration(milliseconds: 2000),
+                  child: Center(
+                    child: TextButton(
+                      onPressed: () => Navigator.pushNamed(context, '/signup'),
+                      child: const Text(
+                        "Don't Have an Account? Sign Up",
+                        style: TextStyle(color: AppColors.paleGreen),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
 }
