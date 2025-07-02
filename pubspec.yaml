@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   http: ^1.1.0
   flutter_dotenv: ^5.1.0
+  animate_do: ^3.0.0
   # carousel_slider: ^4.1.1
 
 
@@ -75,6 +76,7 @@ flutter:
     - images/rice.png
     - images/vegetables.png
     - images/fruits.png
+    - images/AgroBridge.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
