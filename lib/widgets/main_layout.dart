@@ -29,9 +29,9 @@ class MainLayout extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
           IconButton(
-            icon: const Icon(Icons.shopping_cart),
+            icon: const Icon(Icons.notifications),
             onPressed: () {
-              Navigator.pushNamed(context, '/cart');
+              Navigator.pushNamed(context, '/notifications');
             },
           ),
           IconButton(

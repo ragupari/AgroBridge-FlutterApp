@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:green_stack/screens/home_screen.dart';
+import 'package:green_stack/screens/notifications_screen.dart';
 import 'package:green_stack/screens/otp_screen.dart';
 import 'package:green_stack/screens/product_screen.dart';
 import 'screens/login_screen.dart';
@@ -10,7 +11,6 @@ import 'screens/cart_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/profile_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); // ✅ required before async init
@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
         '/settings': (_) => SettingsScreen(),
         '/profile': (_) => ProfileScreen(),
         '/product': (_) => const ProductScreen(),
+        '/notifications': (_) => const NotificationsScreen(),
       },
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:green_stack/widgets/banner_slider.dart';
 import '../widgets/main_layout.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -51,6 +52,9 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 10),
+          const BannerSlider(),
+          const SizedBox(height: 10),
           // 🏷️ Heading: Famous Searchers
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
