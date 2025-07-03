@@ -52,12 +52,9 @@ class JoinScreen extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // Get Started Button
+            // Get Started Button with arrow
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 32.0,
-                vertical: 24,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 24),
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -71,13 +68,20 @@ class JoinScreen extends StatelessWidget {
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
-                  child: const Text(
-                    "Get Started",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Get Started",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Icon(Icons.arrow_forward, color: Colors.white),
+                    ],
                   ),
                 ),
               ),
