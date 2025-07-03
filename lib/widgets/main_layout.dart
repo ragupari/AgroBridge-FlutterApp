@@ -1,7 +1,7 @@
-// main_layout.dart
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class MainLayout extends StatelessWidget {
+class MainLayout extends StatefulWidget {
   final Widget child;
   final int currentIndex;
 
@@ -11,16 +11,72 @@ class MainLayout extends StatelessWidget {
     required this.currentIndex,
   });
 
-  final List<String> _routes = const ['/home', '/status', '/cart', '/settings'];
+  @override
+  State<MainLayout> createState() => _MainLayoutState();
+}
+
+class _MainLayoutState extends State<MainLayout> {
+  late List<String> _routes;
+  late List<BottomNavigationBarItem> _navItems;
+  bool isFarmer = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserType();
+  }
+
+  Future<void> _loadUserType() async {
+    final prefs = await SharedPreferences.getInstance();
+    final type = prefs.getString('userType') ?? 'user';
+
+    setState(() {
+      isFarmer = type == 'farmer';
+      _routes = isFarmer
+          ? ['/home', '/status', '/sell-product', '/cart', '/settings']
+          : ['/home', '/status', '/cart', '/settings'];
+
+      _navItems = isFarmer
+          ? const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Status'),
+              BottomNavigationBarItem(icon: Icon(Icons.sell), label: 'Sell'),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_bag),
+                label: 'Cart',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Settings',
+              ),
+            ]
+          : const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Status'),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_bag),
+                label: 'Cart',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Settings',
+              ),
+            ];
+    });
+  }
 
   void _onTabTapped(BuildContext context, int index) {
-    if (index != currentIndex) {
+    if (_routes[index] != _routes[widget.currentIndex]) {
       Navigator.pushReplacementNamed(context, _routes[index]);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_routes == null || _navItems == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -36,31 +92,25 @@ class MainLayout extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(Icons.person),
-            onPressed: () {
-              Navigator.pushNamed(context, '/profile');
+            onPressed: () async {
+              await Navigator.pushNamed(context, '/profile'); // WAIT for return
+              _loadUserType(); // reload role + bottom bar
             },
           ),
         ],
       ),
-      body: SafeArea(child: child),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) => _onTabTapped(context, index),
-        selectedItemColor: Colors.green[800],
-        unselectedItemColor: Colors.grey,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Status'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
+      body: SafeArea(child: widget.child),
+      bottomNavigationBar: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        child: BottomNavigationBar(
+          key: ValueKey(_navItems.length),
+          currentIndex: widget.currentIndex,
+          onTap: (index) => _onTabTapped(context, index),
+          selectedItemColor: Colors.green[800],
+          unselectedItemColor: Colors.grey,
+          type: BottomNavigationBarType.fixed,
+          items: _navItems,
+        ),
       ),
     );
   }
