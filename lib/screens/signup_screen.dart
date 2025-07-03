@@ -14,32 +14,58 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _lastNameCtrl = TextEditingController();
   final _mobileCtrl = TextEditingController();
 
-  Future<void> handleRegister() async {
-    final response = await AuthService.registerUser(
-      firstname: _firstNameCtrl.text,
-      lastname: _lastNameCtrl.text,
-      mobile: _mobileCtrl.text,
+ Future<void> handleRegister() async {
+  // Optional: show a loading indicator
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (_) => const Center(child: CircularProgressIndicator()),
+  );
+
+  final response = await AuthService.registerUser(
+    firstname: _firstNameCtrl.text.trim(),
+    lastname: _lastNameCtrl.text.trim(),
+    mobile: _mobileCtrl.text.trim(),
+  );
+
+  Navigator.of(context).pop(); // Hide loading dialog
+
+  // Check if registration was successful
+  if (response['data']['success']) {
+   ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          response['data']['message'] ?? 'Registration successful',
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.green,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 3),
+        margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
+        dismissDirection: DismissDirection.up,
+      ),
     );
 
-    if (response['status'] == 200 && response['data']['success']) {
-      Navigator.pushNamed(context, '/otp');
-      print("Registration successful: ${response['data']['message']}");
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            response['data']['message'] ?? 'Error',
-            style: const TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.red,
-          behavior: SnackBarBehavior.floating,
-          duration: const Duration(seconds: 3),
-          margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
-          dismissDirection: DismissDirection.up,
+    // Navigate to OTP screen
+    Navigator.pushNamed(context, '/otp');
+  } else {
+    // Show error message in SnackBar
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          response['data']['message'] ?? 'Registration failed',
+          style: const TextStyle(color: Colors.white),
         ),
-      );
-    }
+        backgroundColor: Colors.red,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 3),
+        margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
+        dismissDirection: DismissDirection.up,
+      ),
+    );
   }
+}
+
 
   Widget customInputField(IconData icon, String hint, TextEditingController controller) {
     return Container(
