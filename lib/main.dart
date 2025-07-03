@@ -5,6 +5,7 @@ import 'package:green_stack/screens/join_screen.dart';
 import 'package:green_stack/screens/notifications_screen.dart';
 import 'package:green_stack/screens/otp_screen.dart';
 import 'package:green_stack/screens/product_screen.dart';
+import 'package:green_stack/screens/product_selling_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 import 'screens/status_screen.dart';
@@ -17,16 +18,16 @@ import 'services/token_validate.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
-  
+
   // Check authentication status
   bool isAuthenticated = await checkTokenValid();
-  
+
   runApp(MyApp(isAuthenticated: isAuthenticated));
 }
 
 class MyApp extends StatelessWidget {
   final bool isAuthenticated;
-  
+
   const MyApp({super.key, required this.isAuthenticated});
 
   @override
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         '/product': (_) => const AuthGuard(child: ProductScreen()),
         '/notifications': (_) => const AuthGuard(child: NotificationsScreen()),
         '/join': (_) => const JoinScreen(),
+        '/sell-product': (_) => const AuthGuard(child: ProductSellingScreen()),
       },
     );
   }
@@ -56,7 +58,7 @@ class MyApp extends StatelessWidget {
 // Auth Guard Widget to protect routes
 class AuthGuard extends StatefulWidget {
   final Widget child;
-  
+
   const AuthGuard({super.key, required this.child});
 
   @override
@@ -83,10 +85,9 @@ class _AuthGuardState extends State<AuthGuard> {
     if (!isValid) {
       // Token is invalid, redirect to login
       if (mounted) {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          '/join',
-          (route) => false,
-        );
+        Navigator.of(
+          context,
+        ).pushNamedAndRemoveUntil('/join', (route) => false);
       }
     }
   }
@@ -94,19 +95,13 @@ class _AuthGuardState extends State<AuthGuard> {
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     if (!_isAuthenticated) {
       // This shouldn't happen due to redirect, but just in case
       return const Scaffold(
-        body: Center(
-          child: Text('Please log in to continue'),
-        ),
+        body: Center(child: Text('Please log in to continue')),
       );
     }
 
