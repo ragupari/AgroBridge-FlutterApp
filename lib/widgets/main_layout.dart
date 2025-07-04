@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,7 +35,7 @@ class _MainLayoutState extends State<MainLayout> {
     setState(() {
       isFarmer = type == 'farmer';
       _routes = isFarmer
-          ? ['/home', '/status', '/sell-product', '/cart', '/settings']
+          ? ['/home', '/status', '/product-selling-welcome', '/settings']
           : ['/home', '/status', '/cart', '/settings'];
 
       _navItems = isFarmer
@@ -41,10 +43,10 @@ class _MainLayoutState extends State<MainLayout> {
               BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
               BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Status'),
               BottomNavigationBarItem(icon: Icon(Icons.sell), label: 'Sell'),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_bag),
-                label: 'Cart',
-              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.shopping_bag),
+              //   label: 'Cart',
+              // ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.settings),
                 label: 'Settings',

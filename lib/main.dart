@@ -6,6 +6,7 @@ import 'package:green_stack/screens/notifications_screen.dart';
 import 'package:green_stack/screens/otp_screen.dart';
 import 'package:green_stack/screens/product_screen.dart';
 import 'package:green_stack/screens/product_selling_screen.dart';
+import 'package:green_stack/screens/product_selling_welcome_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 import 'screens/status_screen.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         '/notifications': (_) => const AuthGuard(child: NotificationsScreen()),
         '/join': (_) => const JoinScreen(),
         '/sell-product': (_) => const AuthGuard(child: ProductSellingScreen()),
+        '/product-selling-welcome': (_) => const ProductSellingWelcomeScreen(),
       },
     );
   }
