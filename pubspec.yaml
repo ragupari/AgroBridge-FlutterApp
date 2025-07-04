@@ -41,6 +41,7 @@ dependencies:
   animate_do: ^3.0.0
   shared_preferences: ^2.5.3
   path_provider: ^2.1.2
+  intl: ^0.20.2
   # carousel_slider: ^4.1.1
 
 
@@ -80,8 +81,8 @@ flutter:
     - images/vegetables.png
     - images/fruits.png
     - images/AgroBridge.png
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+    - images/AddProductBackround.png
+    - images/Bg_Product_add.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
