@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../constants/colors.dart';
+// import '../constants/colors.dart';
 
 class JoinScreen extends StatelessWidget {
   const JoinScreen({super.key});

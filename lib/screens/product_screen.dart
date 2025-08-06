@@ -1,6 +1,9 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:green_stack/constants/colors.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({super.key});
@@ -28,20 +31,57 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Retrieve the product data passed from previous screen
-    final Map<String, dynamic> product =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    TextStyle labelStyle = TextStyle(fontWeight: FontWeight.bold);
+    TextStyle valueStyle = TextStyle(color: Colors.grey[800]);
+
+    Widget buildRow(IconData icon, String label, String value) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          children: [
+            Icon(icon, size: 20, color: AppColors.paleGreen),
+            SizedBox(width: 8),
+            Text("$label: ", style: labelStyle.copyWith(fontSize: 17)),
+            Expanded(
+              child: Text(value, style: valueStyle.copyWith(fontSize: 17)),
+            ),
+          ],
+        ),
+      );
+    }
+
+    // 🔒 Hardcoded product data (temporary until backend integration)
+    final Map<String, dynamic> product = {
+      "name": "Raw Red Rice",
+      "category": "Rice",
+      "price": "250",
+      "discount": "10%",
+      "unit_type": "kg",
+      "location": "Thanjavur",
+      "remaining_quantity": 120,
+      "cultivate_date": "2025-06-01",
+      "expiry_date": "2026-01-01",
+      "is_negotiable": 1,
+      "status": "Available",
+      "description":
+          "This rice is organically grown and sourced from trusted local farms. Ideal for daily consumption and packed with nutrients.",
+      "image":
+          "https://www.world-grain.com/ext/resources/Article-Images/2020/05/Rice_AdobeStock_64819529_E.jpg?height=667&t=1591304238&width=1080",
+    };
 
     return SafeArea(
       child: Scaffold(
         body: Stack(
           children: [
             SizedBox(
-              width: double.infinity,
+              // width: 600,
               child: Image.network(
                 product['image'],
                 fit: BoxFit.cover,
                 height: 300,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Text('⚠️ Image failed to load');
+                },
               ),
             ),
 
@@ -121,21 +161,20 @@ class _ProductScreenState extends State<ProductScreen> {
                             color: const Color.fromARGB(255, 116, 116, 116),
                           ),
                         ),
-
                         const SizedBox(height: 10),
 
-                        // Price & Discount Row
+                        // Price & Discount
                         Row(
                           children: [
                             Text(
-                              'Price: ${product['price']}',
+                              '₹${product['price']} / ${product['unit_type']}',
                               style: GoogleFonts.outfit(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
                                 color: const Color.fromARGB(255, 118, 118, 118),
                               ),
                             ),
-                            const SizedBox(width: 100),
+                            const Spacer(),
                             Text(
                               'Discount: ${product['discount']}',
                               style: GoogleFonts.outfit(
@@ -158,14 +197,75 @@ class _ProductScreenState extends State<ProductScreen> {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
-                          'This rice is organically grown and sourced from trusted local farms. Ideal for daily consumption and packed with nutrients.',
-                          style: TextStyle(fontSize: 16, color: Colors.black54),
+                        Text(
+                          product['description'],
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.black54,
+                          ),
                         ),
-
                         const SizedBox(height: 20),
 
-                        // Quantity selector
+                        // Product Details Section
+                        Text(
+                          "Details",
+                          style: GoogleFonts.outfit(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: const Color.fromARGB(255, 116, 116, 116),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            buildRow(
+                              Icons.category,
+                              "Category",
+                              product['category'] ?? "N/A",
+                            ),
+                            buildRow(
+                              Icons.location_on,
+                              "Location",
+                              product['location'] ?? "N/A",
+                            ),
+                            buildRow(
+                              Icons.home_work,
+                              "Unit Type",
+                              product['unit_type'] ?? "N/A",
+                            ),
+                            buildRow(
+                              Icons.format_list_numbered,
+                              "Remaining Quantity",
+                              "${product['remaining_quantity'] ?? '0'}",
+                            ),
+                            buildRow(
+                              Icons.info,
+                              "Status",
+                              product['status'] ?? "Unknown",
+                            ),
+                            buildRow(
+                              product['is_negotiable'] == 1
+                                  ? Icons.check_circle
+                                  : Icons.cancel,
+                              "Is Negotiable",
+                              product['is_negotiable'] == 1 ? "Yes" : "No",
+                            ),
+                            buildRow(
+                              Icons.event,
+                              "Cultivate Date",
+                              product['cultivate_date'] ?? "N/A",
+                            ),
+                            buildRow(
+                              Icons.event_busy,
+                              "Expiry Date",
+                              product['expiry_date'] ?? "N/A",
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+
+                        // Quantity Selector
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -179,7 +279,7 @@ class _ProductScreenState extends State<ProductScreen> {
                             ),
                             const SizedBox(width: 20),
 
-                            // Decrement button
+                            // Decrement
                             InkWell(
                               onTap: decrement,
                               borderRadius: BorderRadius.circular(5),
@@ -192,10 +292,9 @@ class _ProductScreenState extends State<ProductScreen> {
                                 child: const Icon(Icons.remove),
                               ),
                             ),
-
                             const SizedBox(width: 12),
 
-                            // Quantity display
+                            // Count Display
                             Text(
                               quantity.toString(),
                               style: GoogleFonts.outfit(
@@ -203,10 +302,9 @@ class _ProductScreenState extends State<ProductScreen> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-
                             const SizedBox(width: 12),
 
-                            // Increment button
+                            // Increment
                             InkWell(
                               onTap: increment,
                               borderRadius: BorderRadius.circular(5),
@@ -225,9 +323,7 @@ class _ProductScreenState extends State<ProductScreen> {
                           ],
                         ),
 
-                        const SizedBox(
-                          height: 80,
-                        ), // leave space for Add to Cart button
+                        const SizedBox(height: 80),
                       ],
                     ),
                   ),
@@ -235,7 +331,7 @@ class _ProductScreenState extends State<ProductScreen> {
               },
             ),
 
-            // Add to Cart button fixed at bottom
+            // Add to Cart button fixed
             Positioned(
               bottom: 0,
               left: 0,
@@ -255,7 +351,6 @@ class _ProductScreenState extends State<ProductScreen> {
                     ),
                   ),
                   onPressed: () {
-                    // TODO: Add your add to cart logic here
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(

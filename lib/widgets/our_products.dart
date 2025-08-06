@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 
 class OurProducts extends StatefulWidget {
@@ -39,6 +41,11 @@ class _OurProductsState extends State<OurProducts> {
                     setState(() {
                       selectedIndex = index;
                     });
+                    Navigator.pushNamed(
+                      context,
+                      '/categoryFilterScreen',
+                      arguments: categories[index]['label'],
+                    );
                   },
                   child: Stack(
                     clipBehavior: Clip.none,

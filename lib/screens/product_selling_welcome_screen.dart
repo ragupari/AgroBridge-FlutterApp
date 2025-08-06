@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import 'package:green_stack/widgets/main_layout.dart';
+// import 'package:green_stack/widgets/main_layout.dart';
 
 class ProductSellingWelcomeScreen extends StatelessWidget {
   const ProductSellingWelcomeScreen({super.key});
