@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:green_stack/screens/category_filter_screen.dart';
 import 'package:green_stack/screens/home_screen.dart';
 import 'package:green_stack/screens/join_screen.dart';
 import 'package:green_stack/screens/notifications_screen.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
         '/join': (_) => const JoinScreen(),
         '/sell-product': (_) => const AuthGuard(child: ProductSellingScreen()),
         '/product-selling-welcome': (_) => const ProductSellingWelcomeScreen(),
+        '/categoryFilterScreen': (context) => const CategoryFilterScreen(),
       },
     );
   }
