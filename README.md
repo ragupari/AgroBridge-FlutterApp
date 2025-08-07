@@ -16,11 +16,10 @@ AgroBridge is a **farmer-first, fair-trade agricultural mobile platform** develo
 
 | Photo                                          | Name                  | Department | University             | GitHub                                    | Role                                          |
 | ---------------------------------------------- | --------------------- | ---------- | ---------------------- | ----------------------------------------- | --------------------------------------------- |
-| ![Parishith](https://github.com/ragupari.png)    | Parishith Ragumar     | CSE        | University of Moratuwa | [ragupari](https://github.com/ragupari)       | Mobile App Developer, Backend Integrator      |
-| ![Aanchikan](https://media.licdn.com/dms/image/v2/D5603AQFRTOfmf0cvQw/profile-displayphoto-shrink_400_400/B56ZXHPbjMGsAg-/0/1742804467452?e=1757548800&v=beta&t=5TTNUARgNO5TX5H-YGm0bXWVZTbBi-MCMM603Yy5qU4) | Aanchikan Subaskaran  | Civil      | University of Moratuwa | [aanchikan](https://github.com/aanchikan) | Research, User Needs Analyst                  |
-| ![Rahavi](https://github.com/RahaviSiri.png)    | Rahavi Sirithar       | CSE        | University of Moratuwa | [RahaviSiri](https://github.com/RahaviSiri) | UI/UX Designer, Feature Phone Support Lead    |
-| ![Kajaluxan](https://github.com/Kajaluxan.png) | Kajaluxan Sivakumaran | CSE        | University of Moratuwa | [Kajaluxan](https://github.com/Kajaluxan) | Backend Developer, Payment Gateway Integrator |
-
+| ![Parishith](https://github.com/ragupari.png)    | Parishith Ragumar     | CSE        | University of Moratuwa | [ragupari](https://github.com/ragupari)       | Team Lead, API Integration, Backend-Frontend Communication, Deployment, Testing Support      |
+| ![Rahavi](https://github.com/RahaviSiri.png)    | Rahavi Sirithar       | CSE        | University of Moratuwa | [RahaviSiri](https://github.com/RahaviSiri) | UI/UX Designer, Flutter Developer    |
+| ![Kajaluxan](https://github.com/Kajaluxan.png) | Kajaluxan Sivakumaran | CSE        | University of Moratuwa | [Kajaluxan](https://github.com/Kajaluxan) | Backend Developer, API Design & Management, Test support |
+| ![Aanchikan](https://media.licdn.com/dms/image/v2/D5603AQFRTOfmf0cvQw/profile-displayphoto-shrink_400_400/B56ZXHPbjMGsAg-/0/1742804467452?e=1757548800&v=beta&t=5TTNUARgNO5TX5H-YGm0bXWVZTbBi-MCMM603Yy5qU4) | Aanchikan Subaskaran  | Civil      | University of Moratuwa | [aanchikan](https://github.com/aanchikan) | Team Management                 |
 
 ---
 ## 🌿 Key Features
