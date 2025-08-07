@@ -11,7 +11,8 @@ AgroBridge is a **farmer-first, fair-trade agricultural mobile platform** develo
 
 ## 📆 Hackathon Team
 
-**Team Name:** GreenStack
+**Team Name:** GreenStack 
+
 **University:** University of Moratuwa
 
 | Photo                                          | Name                  | Department | University             | GitHub                                    | Role                                          |
