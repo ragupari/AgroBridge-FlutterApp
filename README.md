@@ -3,6 +3,11 @@
 AgroBridge is a **farmer-first, fair-trade agricultural mobile platform** developed for the mSpace National Hackathon 2025. It is designed to empower farmers by **directly connecting them with consumers and verified buyers**, eliminating exploitative middlemen and ensuring fair pricing, transparency, and inclusivity.
 
 ---
+<p align="center">
+  <img src="screenshots/1.png" alt="Screenshot" width="30%" />
+  <img src="screenshots/2.png" alt="Screenshot" width="30%" />
+  <img src="screenshots/3.png" alt="Screenshot" width="30%" />
+</p>
 
 ## 🌿 Key Features
 
@@ -17,6 +22,16 @@ AgroBridge is a **farmer-first, fair-trade agricultural mobile platform** develo
 * **Flutter-based mobile interface** for Android & iOS
 * **SMS/USSD** integration for feature phone access via mSpace APIs
 * **Voice/text notifications** for order updates and market trends
+
+### ⏲️ Real-Time Tracking & Inventory
+
+* **Order tracking** for both farmers and buyers
+* **Live inventory updates** by farmers
+
+### 💳 Secure Payments
+
+* **Multiple payment methods:** PayPal, Stripe, mCash, eZ Cash
+* **Escrow service** to ensure fair trade
 
 ### 🔍 Product Listings & Discovery
 
@@ -35,6 +50,7 @@ AgroBridge is a **farmer-first, fair-trade agricultural mobile platform** develo
 
 | API                  | Purpose                                                     |
 | -------------------- | ----------------------------------------------------------- |
+| **CaaS API**         | Micro-payment deductions from mobile credit                 |
 | **Subscription API** | Role-based access (Farmer, Buyer, Admin) + targeted updates |
 | **OTP API**          | Secure OTP-based login/authentication                       |
 | **SMS API**          | Real-time SMS/USSD alerts for orders, payments, etc.        |
@@ -100,6 +116,37 @@ Have ideas or feedback? Fork this repo and send a pull request or raise an issue
 ## 📂 Backend Repository
 
 **GitHub:** [AgroBridge Backend Repo](https://github.com/ragupari/AgroBridge-Backend)
+
+---
+
+## 💡 How to Run the App
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/ragupari/AgroBridge-FlutterApp.git
+cd AgroBridge-FlutterApp
+```
+
+### 2. Set up dependencies
+
+```bash
+flutter pub get
+```
+
+### 3. Create a `.env` file at the root of the project
+
+```
+API_BASE_URL=
+```
+
+Make sure to use your own backend API URL if deployed elsewhere.
+
+### 4. Run the app
+
+```bash
+flutter run
+```
 
 ---
 
