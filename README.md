@@ -2,13 +2,27 @@
 
 AgroBridge is a **farmer-first, fair-trade agricultural mobile platform** developed for the mSpace National Hackathon 2025. It is designed to empower farmers by **directly connecting them with consumers and verified buyers**, eliminating exploitative middlemen and ensuring fair pricing, transparency, and inclusivity.
 
----
 <p align="center">
   <img src="screenshots/1.png" alt="Screenshot" width="30%" />
   <img src="screenshots/2.png" alt="Screenshot" width="30%" />
   <img src="screenshots/3.png" alt="Screenshot" width="30%" />
 </p>
+---
 
+## 📆 Hackathon Team
+
+**Team Name:** GreenStack
+**University:** University of Moratuwa
+
+| Photo                                          | Name                  | Department | University             | GitHub                                    | Role                                          |
+| ---------------------------------------------- | --------------------- | ---------- | ---------------------- | ----------------------------------------- | --------------------------------------------- |
+| ![Parishith](https://github.com/ragupari.png)    | Parishith Ragumar     | CSE        | University of Moratuwa | [ragupari](https://github.com/ragupari)       | Mobile App Developer, Backend Integrator      |
+| ![Aanchikan](https://github.com/aanchikan.png) | Aanchikan Subaskaran  | Civil      | University of Moratuwa | [aanchikan](https://github.com/aanchikan) | Research, User Needs Analyst                  |
+| ![Rahavi](https://github.com/RahaviSiri.png)    | Rahavi Sirithar       | CSE        | University of Moratuwa | [RahaviSiri](https://github.com/RahaviSiri) | UI/UX Designer, Feature Phone Support Lead    |
+| ![Kajaluxan](https://github.com/Kajaluxan.png) | Kajaluxan Sivakumaran | CSE        | University of Moratuwa | [Kajaluxan](https://github.com/Kajaluxan) | Backend Developer, Payment Gateway Integrator |
+
+
+---
 ## 🌿 Key Features
 
 ### ✉️ Direct Connections
@@ -54,18 +68,6 @@ AgroBridge is a **farmer-first, fair-trade agricultural mobile platform** develo
 | **Subscription API** | Role-based access (Farmer, Buyer, Admin) + targeted updates |
 | **OTP API**          | Secure OTP-based login/authentication                       |
 | **SMS API**          | Real-time SMS/USSD alerts for orders, payments, etc.        |
-
----
-
-## 📆 Hackathon Team
-
-**Team Name:** GreenStack
-**University:** University of Moratuwa
-
-* Parishith Ragumar (CSE)
-* Aanchikan Subaskaran (Civil)
-* Rahavi Sirithar (CSE)
-* Kajaluxan Sivakumaran (CSE)
 
 ---
 
